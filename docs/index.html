@@ -97,6 +97,9 @@
   }
   .hero-content { position: relative; padding: 64px var(--gutter) 48px; max-width: var(--maxw); margin: 0 auto; }
   .hero-content .eyebrow { color: #9fb4ec; }
+  /* Лёгкая тень: без неё детали фото под текстом просвечивают сквозь буквы и на глаз выглядят как
+     дефект шрифта (например, диагональ оборудования на фото за буквой «В» в слове «Вентиляция») */
+  .hero-content h1, .hero-content .thesis { text-shadow: 0 1px 4px rgba(6, 10, 20, 0.55); }
   .hero-content .thesis { margin-top: 18px; font-family: var(--font-head); font-weight: 600; font-size: clamp(17px, 2.4vw, 20px); color: var(--cream); }
   .hero-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 9px; max-width: 60ch; }
   .hero-list li { position: relative; padding-left: 18px; color: rgba(242,240,235,0.86); font-size: 15px; }
