@@ -98,6 +98,9 @@
      акцентных блоках сайта ---- */
   .hero { position: relative; color: var(--cream); overflow: hidden; background: var(--panel); --hero-photo-h: clamp(320px, 78vw, 620px); }
   .hero-bg { position: absolute; top: 0; left: 0; right: 0; height: var(--hero-photo-h); }
+  /* На широких экранах исходник (960×1280) растягивается заметно шире своего
+     реального разрешения и выглядит мыльным; ограничиваем ширину полосы, чтобы
+     масштаб увеличения был ближе к 1:1 — пусто по бокам закрываем тем же --panel */
   .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 46%; }
   .hero-bg::after {
     content: ""; position: absolute; inset: 0;
@@ -261,6 +264,7 @@
     nav.site-nav { display: flex; }
     #navToggle { display: none; }
     .hero { --hero-photo-h: 620px; }
+    .hero-bg { left: auto; right: 0; width: min(100%, 1040px); }
     .hero-content { padding: 96px var(--gutter) 72px; }
     h1 { font-size: 44px; }
     .podbor-inner { flex-direction: row; align-items: center; justify-content: center; gap: 64px; }
