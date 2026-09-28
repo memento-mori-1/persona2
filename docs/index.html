@@ -92,15 +92,18 @@
   #mobileNav a { padding: 14px var(--gutter); text-decoration: none; font-size: 15px; border-bottom: 1px solid var(--line); }
   #mobileNav a.cta { color: var(--accent); font-weight: 600; }
 
-  /* ---- Герой ---- */
-  .hero { position: relative; color: var(--cream); overflow: hidden; }
-  .hero-bg { position: absolute; inset: 0; }
-  .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; }
+  /* ---- Герой: фото — полоса ограниченной высоты сверху (не на весь блок, иначе на
+     мобильном, где текста много и блок высокий, фото растягивается и лицо съезжает
+     под текст); ниже полосы — сплошной --panel, тот же тёмный, что и в остальных
+     акцентных блоках сайта ---- */
+  .hero { position: relative; color: var(--cream); overflow: hidden; background: var(--panel); --hero-photo-h: clamp(320px, 78vw, 620px); }
+  .hero-bg { position: absolute; top: 0; left: 0; right: 0; height: var(--hero-photo-h); }
+  .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 46%; }
   .hero-bg::after {
     content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(16,27,55,0.55) 0%, rgba(16,27,55,0.74) 55%, rgba(16,27,55,0.92) 100%);
+    background: linear-gradient(180deg, rgba(16,27,55,0.22) 0%, rgba(16,27,55,0.45) 60%, rgba(16,27,55,1) 100%);
   }
-  .hero-content { position: relative; padding: 64px var(--gutter) 48px; max-width: var(--maxw); margin: 0 auto; }
+  .hero-content { position: relative; padding: calc(var(--hero-photo-h) + 20px) var(--gutter) 48px; max-width: var(--maxw); margin: 0 auto; }
   .hero-content .eyebrow { color: #9fb4ec; }
   /* Лёгкая тень: без неё детали фото под текстом просвечивают сквозь буквы и на глаз выглядят как
      дефект шрифта (например, диагональ оборудования на фото за буквой «В» в слове «Вентиляция») */
@@ -147,9 +150,10 @@
 
   /* ---- Демо подбора: тот же тёмный --panel, что в hero и «Как со мной работать» —
      второй акцентный блок в ритме страницы, чтобы не терялся на кремовом фоне ---- */
-  .podbor { background: var(--panel); color: var(--cream); }
+  .podbor { background: var(--panel); color: var(--cream); position: relative; overflow: hidden; }
+  .podbor-logo-bg { display: block; width: 240px; max-width: 60%; height: auto; }
   .podbor-inner {
-    display: flex; flex-direction: column; gap: 20px;
+    display: flex; flex-direction: column; gap: 28px;
     align-items: flex-start;
   }
   .podbor-inner h2 { color: var(--cream); margin-bottom: 8px; }
@@ -252,12 +256,11 @@
     .life-texts { grid-template-columns: repeat(2, 1fr); }
     .photos { grid-template-columns: repeat(4, 1fr); }
     .contact-grid { grid-template-columns: repeat(4, 1fr); }
-    .podbor-inner { flex-direction: row; align-items: center; justify-content: space-between; gap: 32px; }
-    .podbor-inner .text { flex: 1; }
   }
   @media (min-width: 960px) {
     nav.site-nav { display: flex; }
     #navToggle { display: none; }
+    .hero { --hero-photo-h: 620px; }
     .hero-content { padding: 96px var(--gutter) 72px; }
     h1 { font-size: 44px; }
   }
@@ -329,14 +332,14 @@
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7h11v8h-11z"/><path d="M13.5 10h4l3 3v2h-7z"/><circle cx="6.5" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></div>
           <div>
             <h3>Поставка оборудования по проекту</h3>
-            <p>От приточной установки до полного комплекта на объект: подбор, сроки, документы, доставка по стране.</p>
+            <p>От канального вентилятора до сложной климатической установки: подбор, документация, гибкие условия, доставка по стране.</p>
           </div>
         </div>
         <div class="service">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16"/><line x1="4" y1="9.3" x2="20" y2="9.3"/><line x1="4" y1="14.6" x2="20" y2="14.6"/></svg></div>
           <div>
             <h3>Противодымная вентиляция</h3>
-            <p>Вентиляторы дымоудаления и подпора, противопожарные и дымовые клапаны, воздуховоды. Подбор под проект и под обновлённые нормы пожарной безопасности, в том числе на действующих объектах без остановки работы.</p>
+            <p>Вентиляторы дымоудаления и подпора, противопожарные и дымовые клапаны. Глубокий анализ проекта и подбор с учётом всех норм пожарной безопасности, согласование оборудования во всех инстанциях.</p>
           </div>
         </div>
         <div class="service">
@@ -350,22 +353,29 @@
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h14l-3.2-3.2"/><path d="M21 16H7l3.2 3.2"/></svg></div>
           <div>
             <h3>Подбор аналогов под проект</h3>
-            <p>Проектное оборудование недоступно или дорого: замена по рабочей точке, совпадение характеристик подтверждено.</p>
+            <p>Проектное оборудование недоступно или дорого: технически грамотный подбор аналогов с учётом всех особенностей проектной спецификации.</p>
             <a class="demo-link" href="https://memento-mori-1.github.io/analog-selection-landing/podbor.html" target="_blank" rel="noopener">Пример расчёта →</a>
           </div>
         </div>
         <div class="service">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2z"/></svg></div>
           <div>
-            <h3>Техническая поддержка проектировщиков и монтажников</h3>
-            <p>Расчёты, аэродинамика, спорные места по сети. Отдельно — подрядчикам и монтажникам: точный просчёт под смету заказчика, без ошибок и без сорванных сроков.</p>
+            <h3>Техническая поддержка</h3>
+            <p>Расчёты, аэродинамика, спорные места. Предоставим подробное техническое описание, коммерческое предложение с привязкой ко всем системам.</p>
+          </div>
+        </div>
+        <div class="service">
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3.2v5.3c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V6.2z"/><path d="M9 12l2.2 2.2L15.5 9.5"/></svg></div>
+          <div>
+            <h3>Сервис и гарантия</h3>
+            <p>Обеспечиваем гарантию на всё продаваемое оборудование на территории РБ. Работаем только с проверенными заводами.</p>
           </div>
         </div>
         <div class="service">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9.5 20v-6h5v6"/></svg></div>
           <div>
             <h3>Склад и логистика по Беларуси</h3>
-            <p>Филиал в каждом областном центре со своим складом, ходовые позиции не нужно ждать из-за границы.</p>
+            <p>Филиал в каждом областном центре со своим складом, ходовые позиции всегда в наличии.</p>
           </div>
         </div>
       </div>
@@ -374,12 +384,13 @@
 
   <section id="podbor-demo" class="podbor section-border">
     <div class="wrap podbor-inner">
+      <img class="podbor-logo-bg" src="images/aerohit-logo-ftr.png" alt="Аэрохит · aeroheat.by">
       <div class="text">
-        <p class="eyebrow on-dark">Прототип</p>
-        <h2>Программа подбора вентиляторов с учётом аэродинамических характеристик</h2>
+        <p class="eyebrow on-dark">Демо</p>
+        <h2>Программа подбора</h2>
         <p>Расчёт по кривой Q-P каталога.</p>
+        <a class="btn btn-accent-outline" href="https://memento-mori-1.github.io/analog-selection-landing/podbor.html" target="_blank" rel="noopener">Открыть подбор ↗</a>
       </div>
-      <a class="btn btn-accent-outline" href="https://memento-mori-1.github.io/analog-selection-landing/podbor.html" target="_blank" rel="noopener">Открыть подбор ↗</a>
     </div>
   </section>
 
