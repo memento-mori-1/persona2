@@ -71,9 +71,11 @@
     border-bottom: 1px solid var(--line);
   }
   .site-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px var(--gutter); max-width: var(--maxw); margin: 0 auto; }
-  .brand { display: flex; align-items: baseline; gap: 10px; text-decoration: none; }
-  .brand strong { font-family: var(--font-head); font-size: 16px; font-weight: 700; }
-  .brand span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--ink-mute); text-transform: uppercase; }
+  .brand {
+    font-family: var(--font-head); font-size: 18px; font-weight: 700; letter-spacing: 0.02em;
+    color: var(--ink); text-decoration: none;
+  }
+  .brand:hover { color: var(--accent); }
   nav.site-nav { display: none; gap: 28px; }
   nav.site-nav a { text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap; }
   nav.site-nav a:hover { color: var(--accent); }
@@ -93,7 +95,7 @@
   /* ---- Герой ---- */
   .hero { position: relative; color: var(--cream); overflow: hidden; }
   .hero-bg { position: absolute; inset: 0; }
-  .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; }
   .hero-bg::after {
     content: ""; position: absolute; inset: 0;
     background: linear-gradient(180deg, rgba(16,27,55,0.55) 0%, rgba(16,27,55,0.74) 55%, rgba(16,27,55,0.92) 100%);
@@ -126,7 +128,8 @@
 
   /* ---- Цифры ---- */
   .stats { display: grid; grid-template-columns: repeat(2, 1fr); }
-  .stats .stat { padding: 22px var(--gutter); border-top: 1px solid var(--line); border-right: 1px solid var(--line); }
+  .stats .stat { padding: 22px 16px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); }
+  .stats .stat:nth-child(-n+2) { border-top: none; }
   .stats .stat:nth-child(2n) { border-right: none; }
   .stat b { display: block; font-family: var(--font-head); font-size: 26px; font-weight: 700; }
   .stat span { display: block; margin-top: 6px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-mute); }
@@ -142,23 +145,27 @@
   .service .demo-link { display: inline-block; margin-top: 10px; font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; }
   .service .demo-link:hover { text-decoration: underline; }
 
-  /* ---- Демо подбора: без отдельного фона — оформлено как ещё один блок в общем ритме страницы
-     (кремовый фон, тонкая линия сверху/снизу, как у карточек «Чем помогаю»); синим — только кнопка,
-     контуром, а не сплошной заливкой ---- */
+  /* ---- Демо подбора: тот же тёмный --panel, что в hero и «Как со мной работать» —
+     второй акцентный блок в ритме страницы, чтобы не терялся на кремовом фоне ---- */
+  .podbor { background: var(--panel); color: var(--cream); }
   .podbor-inner {
     display: flex; flex-direction: column; gap: 20px;
     align-items: flex-start;
   }
-  .podbor-inner h2 { color: var(--ink); margin-bottom: 8px; }
-  .podbor-inner p { color: var(--ink-soft); font-size: 15px; max-width: 56ch; }
+  .podbor-inner h2 { color: var(--cream); margin-bottom: 8px; }
+  .podbor-inner p { color: var(--panel-soft); font-size: 15px; max-width: 56ch; }
+  .podbor .btn-accent-outline { border-color: rgba(242,240,235,0.5); color: var(--cream); }
+  .podbor .btn-accent-outline:hover { border-color: var(--cream); background: rgba(242,240,235,0.1); }
 
   /* ---- С кем работаем ---- */
   .factories { display: grid; grid-template-columns: 1fr; gap: 32px; }
   .factory-group h3 { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--ink-mute); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.02em; }
-  .factory-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .factory-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
   .factory-row:last-child { padding-bottom: 0; }
-  .factory-row b { font-size: 15px; font-weight: 600; }
+  .factory-row b { flex: 1; font-size: 15px; font-weight: 600; }
   .factory-row span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-mute); text-align: right; white-space: nowrap; }
+  .factory-logo { width: 42px; height: 26px; object-fit: contain; flex-shrink: 0; }
+  .factory-logo.pishevye { background: var(--panel); padding: 3px; box-sizing: content-box; }
 
   /* ---- Путь ---- */
   .timeline { display: grid; grid-template-columns: 1fr; gap: 0; }
@@ -172,11 +179,24 @@
   .obj-intro { display: grid; gap: 14px; margin-bottom: 32px; }
   .obj-intro p { color: var(--ink-soft); font-size: 15px; }
   .objects { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  .obj-card { border: 1px solid var(--line); padding: 20px; }
+  .obj-card { border: 1px solid var(--line); overflow: hidden; }
+  .obj-card .obj-body { padding: 20px; }
+  .obj-photo { aspect-ratio: 16 / 10; background: var(--panel); overflow: hidden; }
+  .obj-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+  .obj-card:hover .obj-photo img { transform: scale(1.04); }
   .obj-card h3 { font-family: var(--font-body); font-size: 16px; font-weight: 600; margin: 0 0 2px; }
   .obj-card .tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-mute); }
   .obj-card p { color: var(--ink-soft); font-size: 14px; margin-top: 10px; }
   .obj-card p.scope { color: var(--ink); font-size: 13px; margin-top: 8px; }
+  .obj-more { margin-top: 10px; }
+  .obj-more summary {
+    cursor: pointer; list-style: none;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent);
+  }
+  .obj-more summary::-webkit-details-marker { display: none; }
+  .obj-more summary::after { content: " ↓"; }
+  .obj-more[open] summary::after { content: " ↑"; }
+  .obj-more[open] summary { margin-bottom: 2px; }
 
   /* ---- Как со мной работать (тёмный блок, тот же --panel, что и в блоке демо) ---- */
   .approach { background: var(--panel); color: var(--cream); }
@@ -209,11 +229,18 @@
   .contact-grid a:hover { color: var(--accent); }
   .foot-bottom { border-top: 1px solid var(--line); padding: 20px var(--gutter); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-mute); text-align: center; }
 
+  /* ---- Появление при скролле: лёгкий fade-up, отключается по prefers-reduced-motion ---- */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.is-visible { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
   /* ---- Планшет и шире ---- */
   @media (min-width: 720px) {
     section { padding: 72px 0; }
     .stats { grid-template-columns: repeat(4, 1fr); }
-    .stats .stat { border-right: 1px solid var(--line); }
+    .stats .stat { border-top: none; border-right: 1px solid var(--line); }
     .stats .stat:nth-child(2n) { border-right: 1px solid var(--line); }
     .stats .stat:last-child { border-right: none; }
     .hero-list { grid-template-columns: repeat(2, 1fr); column-gap: 28px; max-width: none; }
@@ -240,7 +267,7 @@
 
   <header class="site">
     <div class="site-inner">
-      <a class="brand" href="#top"><strong>Андрей Андреев</strong><span>Досье</span></a>
+      <a class="brand" href="#top">АА</a>
       <nav class="site-nav">
         <a href="#services">Услуги</a>
         <a href="#factories">Заводы</a>
@@ -283,11 +310,15 @@
     </div>
   </section>
 
-  <section class="stats" aria-label="Цифры компании">
-    <div class="stat"><b>15 лет</b><span>В отрасли</span></div>
-    <div class="stat"><b>6 городов</b><span>Минск и все областные центры</span></div>
-    <div class="stat"><b>Свой склад</b><span>В каждом филиале</span></div>
-    <div class="stat"><b>12 заводов</b><span>Партнёров — от вентиляторов до насосов</span></div>
+  <section class="stats-section section-border" aria-label="Цифры компании">
+    <div class="wrap">
+      <div class="stats">
+        <div class="stat"><b>15 лет</b><span>В отрасли</span></div>
+        <div class="stat"><b>6 городов</b><span>Минск и все областные центры</span></div>
+        <div class="stat"><b>Свой склад</b><span>В каждом филиале</span></div>
+        <div class="stat"><b>12 заводов</b><span>Партнёров — от вентиляторов до насосов</span></div>
+      </div>
+    </div>
   </section>
 
   <section id="services" class="section-border">
@@ -341,10 +372,10 @@
     </div>
   </section>
 
-  <section id="podbor-demo" class="section-border">
+  <section id="podbor-demo" class="podbor section-border">
     <div class="wrap podbor-inner">
       <div class="text">
-        <p class="eyebrow">Прототип</p>
+        <p class="eyebrow on-dark">Прототип</p>
         <h2>Программа подбора вентиляторов с учётом аэродинамических характеристик</h2>
         <p>Расчёт по кривой Q-P каталога.</p>
       </div>
@@ -359,27 +390,27 @@
       <div class="factories">
         <div class="factory-group">
           <h3>Вентиляция и дымоудаление</h3>
-          <div class="factory-row"><b>Сигма-Вент</b><span>Партнёр</span></div>
-          <div class="factory-row"><b>Завод ВЕНТИЛЯТОР / СЗЭМО</b><span>Официальный поставщик</span></div>
-          <div class="factory-row"><b>Концерн Медведь</b><span>Официальный поставщик</span></div>
-          <div class="factory-row"><b>Systemair</b><span>Официальный поставщик</span></div>
-          <div class="factory-row"><b>РОВЕН</b><span>Официальный дилер</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/sigma-vent.svg" alt="Сигма-Вент" loading="lazy"><b>Сигма-Вент</b><span>Партнёр</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/zavod-ventilyator.svg" alt="Завод ВЕНТИЛЯТОР / СЗЭМО" loading="lazy"><b>Завод ВЕНТИЛЯТОР / СЗЭМО</b><span>Официальный поставщик</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/medved.png" alt="Концерн Медведь" loading="lazy"><b>Концерн Медведь</b><span>Официальный поставщик</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/systemair.jpg" alt="Systemair" loading="lazy"><b>Systemair</b><span>Официальный поставщик</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/roven.png" alt="РОВЕН" loading="lazy"><b>РОВЕН</b><span>Официальный дилер</span></div>
         </div>
         <div class="factory-group">
           <h3>Тепловые завесы и воздушное отопление</h3>
-          <div class="factory-row"><b>НПО «Тепломаш»</b><span>Партнёр</span></div>
-          <div class="factory-row"><b>VTS Group — Volcano, Wing</b><span>Официальный поставщик</span></div>
-          <div class="factory-row"><b>Terma</b><span>Официальный дилер</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/teplomash.png" alt="НПО «Тепломаш»" loading="lazy"><b>НПО «Тепломаш»</b><span>Партнёр</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/vts.svg" alt="VTS Group" loading="lazy"><b>VTS Group — Volcano, Wing</b><span>Официальный поставщик</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/terma.svg" alt="Terma" loading="lazy"><b>Terma</b><span>Официальный дилер</span></div>
         </div>
         <div class="factory-group">
           <h3>Насосы</h3>
-          <div class="factory-row"><b>Wellmix</b><span>Официальный поставщик</span></div>
-          <div class="factory-row"><b>Уралгидропром</b><span>Официальный поставщик</span></div>
-          <div class="factory-row"><b>«Пищевые насосы»</b><span>Официальный представитель</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/wellmix.png" alt="Wellmix" loading="lazy"><b>Wellmix</b><span>Официальный поставщик</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/uralgidroprom.svg" alt="Уралгидропром" loading="lazy"><b>Уралгидропром</b><span>Официальный поставщик</span></div>
+          <div class="factory-row"><img class="factory-logo pishevye" src="images/partners/pishevye-nasosy.png" alt="«Пищевые насосы»" loading="lazy"><b>«Пищевые насосы»</b><span>Официальный представитель</span></div>
         </div>
         <div class="factory-group">
           <h3>Трубопроводная арматура</h3>
-          <div class="factory-row"><b>REON</b><span>Официальный поставщик</span></div>
+          <div class="factory-row"><img class="factory-logo" src="images/partners/reon.png" alt="REON" loading="lazy"><b>REON</b><span>Официальный поставщик</span></div>
         </div>
       </div>
     </div>
@@ -429,48 +460,79 @@
         <p>Оборудование смотрю вживую: на выставках в России и за рубежом, на заводах, в цехах. Прежде чем предложить позицию на объект, хочу понимать, как она собрана и где у неё предел.</p>
       </div>
       <div class="objects">
-        <div class="obj-card">
-          <h3>ЖК «Минск Мир»</h3>
-          <div class="tag">Жилой комплекс · «Дана Астра»</div>
-          <p>Проект в работе. Подбор по ТЗ, согласование с проектной организацией, приёмка гарантии и пусконаладка.</p>
-          <p class="scope">В поставке: клапаны Сигмавент, вентиляторы дымоудаления ВКРВм ДУ, ВКРФм ДУ, ВР 86-77 ДУ, вентиляторы подпора ВКОПв, канальные ВКК-М, крышные ВКР, тепловая завеса КЭВ, преобразователь частоты M-driver.</p>
+        <div class="obj-card has-photo">
+          <div class="obj-photo"><img src="images/objects/minsk-mir.png" alt="Поставка вентиляционного оборудования на объект ЖК «Минск Мир»" loading="lazy"></div>
+          <div class="obj-body">
+            <h3>ЖК «Минск Мир»</h3>
+            <div class="tag">Жилой комплекс · «Дана Астра»</div>
+            <p>Проект в работе. Подбор по ТЗ, согласование с проектной организацией, приёмка гарантии и пусконаладка.</p>
+            <details class="obj-more">
+              <summary>Подробнее</summary>
+              <p class="scope">В поставке: клапаны Сигмавент, вентиляторы дымоудаления ВКРВм ДУ, ВКРФм ДУ, ВР 86-77 ДУ, вентиляторы подпора ВКОПв, канальные ВКК-М, крышные ВКР, тепловая завеса КЭВ, преобразователь частоты M-driver.</p>
+            </details>
+          </div>
+        </div>
+        <div class="obj-card has-photo">
+          <div class="obj-photo"><img src="images/objects/titan.jpg" alt="Вентиляторы дымоудаления и противопожарные клапаны на объекте ТРЦ «Титан»" loading="lazy"></div>
+          <div class="obj-body">
+            <h3>ТРЦ «Титан»</h3>
+            <div class="tag">Торговый центр · ООО «Сигмаполюс»</div>
+            <p>Модернизация противодымной вентиляции под обновлённые нормы пожарной безопасности: вентиляторы дымоудаления, противопожарные клапаны, воздуховоды.</p>
+            <details class="obj-more">
+              <summary>Подробнее</summary>
+              <p class="scope">Выполнено в срок, без остановки работы центра, бюджет сохранён за счёт оптимального подбора.</p>
+            </details>
+          </div>
+        </div>
+        <div class="obj-card has-photo">
+          <div class="obj-photo"><img src="images/objects/grodno-azot.jpg" alt="Насосное оборудование на объекте ОАО «Гродно Азот»" loading="lazy"></div>
+          <div class="obj-body">
+            <h3>ОАО «Гродно Азот»</h3>
+            <div class="tag">Химическая промышленность</div>
+            <p>Насосы для химически активных сред.</p>
+            <details class="obj-more">
+              <summary>Подробнее</summary>
+              <p class="scope">В поставке: ЦНСК 300-120 с проточной частью из нержавеющей стали.</p>
+            </details>
+          </div>
+        </div>
+        <div class="obj-card has-photo">
+          <div class="obj-photo"><img src="images/objects/bilevo.jpg" alt="Поставка противопожарного оборудования для жилых домов в микрорайоне Билево, Витебск" loading="lazy"></div>
+          <div class="obj-body">
+            <h3>Жилые дома, микрорайон Билево, Витебск</h3>
+            <div class="tag">ГП «УКС г. Витебска»</div>
+            <p>Вентиляторы дымоудаления и противопожарные клапаны для двух многоквартирных домов, жёсткие сроки строительства.</p>
+          </div>
+        </div>
+        <div class="obj-card has-photo">
+          <div class="obj-photo"><img src="images/objects/chayka.jpeg" alt="Вентиляционное оборудование и насосы на объекте ЖК «Чайка», Брест" loading="lazy"></div>
+          <div class="obj-body">
+            <h3>ЖК «Чайка», Брест</h3>
+            <div class="tag">ОДО «Айрон»</div>
+            <p>Вентиляционное оборудование и насосы, поставка в установленные сроки.</p>
+          </div>
+        </div>
+        <div class="obj-card has-photo">
+          <div class="obj-photo"><img src="images/objects/bab-krynka.jpg" alt="Вентиляторы и насосы на реконструкции цехов ОАО «Бабушкина Крынка»" loading="lazy"></div>
+          <div class="obj-body">
+            <h3>ОАО «Бабушкина Крынка»</h3>
+            <div class="tag">Пищевая промышленность</div>
+            <p>Реконструкция цехов: вентиляторы, мембранные и консольные насосы.</p>
+          </div>
         </div>
         <div class="obj-card">
-          <h3>ТРЦ «Титан»</h3>
-          <div class="tag">Торговый центр · ООО «Сигмаполюс»</div>
-          <p>Модернизация противодымной вентиляции под обновлённые нормы пожарной безопасности: вентиляторы дымоудаления, противопожарные клапаны, воздуховоды.</p>
-          <p class="scope">Выполнено в срок, без остановки работы центра, бюджет сохранён за счёт оптимального подбора.</p>
+          <div class="obj-body">
+            <h3>ОАО «Рогачёвский МКК»</h3>
+            <div class="tag">Молочное производство</div>
+            <p>Насосы ЭЦВ и мембранные.</p>
+          </div>
         </div>
         <div class="obj-card">
-          <h3>ОАО «Гродно Азот»</h3>
-          <div class="tag">Химическая промышленность</div>
-          <p>Насосы для химически активных сред.</p>
-          <p class="scope">В поставке: ЦНСК 300-120 с проточной частью из нержавеющей стали.</p>
-        </div>
-        <div class="obj-card">
-          <h3>Жилые дома, микрорайон Билево, Витебск</h3>
-          <div class="tag">ГП «УКС г. Витебска»</div>
-          <p>Вентиляторы дымоудаления и противопожарные клапаны для двух многоквартирных домов, жёсткие сроки строительства.</p>
-        </div>
-        <div class="obj-card">
-          <h3>ЖК «Чайка», Брест</h3>
-          <div class="tag">ОДО «Айрон»</div>
-          <p>Вентиляционное оборудование и насосы, поставка в установленные сроки.</p>
-        </div>
-        <div class="obj-card">
-          <h3>ОАО «Бабушкина Крынка»</h3>
-          <div class="tag">Пищевая промышленность</div>
-          <p>Реконструкция цехов: вентиляторы, мембранные и консольные насосы.</p>
-        </div>
-        <div class="obj-card">
-          <h3>ОАО «Рогачёвский МКК»</h3>
-          <div class="tag">Молочное производство</div>
-          <p>Насосы ЭЦВ и мембранные.</p>
-        </div>
-        <div class="obj-card">
-          <h3>Инновационный центр, Брестский регион</h3>
-          <div class="tag">13 гектаров</div>
-          <p>Оборудование «Тепломаш», самовывоз со склада в Минске.</p>
+          <div class="obj-body">
+            <h3>Инновационный центр, Брестский регион</h3>
+            <div class="tag">13 гектаров</div>
+            <p>Оборудование «Тепломаш», самовывоз со склада в Минске.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -564,6 +626,27 @@
           menu.classList.remove('open');
           toggle.setAttribute('aria-expanded', 'false');
         });
+      });
+    })();
+
+    (function () {
+      var targets = document.querySelectorAll('.service, .obj-card, .factory-group, .tl-item, .photo');
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!('IntersectionObserver' in window) || reduceMotion) {
+        targets.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      targets.forEach(function (el) {
+        el.classList.add('reveal');
+        observer.observe(el);
       });
     })();
   </script>
